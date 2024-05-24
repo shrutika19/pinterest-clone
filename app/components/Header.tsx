@@ -38,13 +38,21 @@ const Header = () => {
       <HiBell className="text-[40px] text-gray-500" />
       <HiChat className="text-[40px] text-gray-500" />
       {session?.user ? (
-        <Image
-          src={userImage}
-          alt="user-image"
-          width={50}
-          height={50}
-          className="hover:bg-gray-300 p-2 rounded-full cursor-pointer"
-        />
+        <>
+          <Image
+            src={userImage}
+            alt="user-image"
+            width={50}
+            height={50}
+            className="hover:bg-gray-300 p-2 rounded-full cursor-pointer"
+          />
+          <button
+            onClick={() => signOut()}
+            className="font-semibold p-2 rounded-full px-4"
+          >
+            Logout
+          </button>
+        </>
       ) : (
         <button
           onClick={() => signIn()}
