@@ -1,14 +1,50 @@
 "use client";
 
 import Image from "next/image";
-import React from "react";
+import React, { useEffect } from "react";
 import { HiOutlineSearch, HiBell, HiChat } from "react-icons/hi";
 import { useSession, signIn, signOut } from "next-auth/react";
+import { doc, getFirestore, setDoc } from "firebase/firestore";
+import app from "./../Shared/firebaseConfig";
 
 const Header = () => {
   const { data: session } = useSession();
   console.log(session);
   const userImage = session?.user?.image ?? "/man.png";
+
+  const db = getFirestore(app);
+
+  // const saveuserinfo = async() => {
+  //   if(session?.user){
+  //     await setDoc(doc(db, "user", session?.user?.email), {
+  //       userName: session?.user?.name,
+  //       email: session?.user?.email,
+  //       userImage: session?.user?.image,
+  //     })
+  //   }
+  // }
+
+  useEffect(() => {
+    saveUserInfo();
+  }, [session]);
+
+  const saveUserInfo = async () => {
+    if (!session?.user?.email) {
+      console.error("User email is not available.");
+      return;
+    }
+
+    try {
+      await setDoc(doc(db, "user", session.user.email), {
+        userName: session.user.name,
+        email: session.user.email,
+        userImage: session.user.image,
+      });
+      console.log("User information saved successfully.");
+    } catch (error) {
+      console.error("Error saving user information:", error);
+    }
+  };
 
   return (
     <div className="flex gap-3 md:gap-2 items-center p-6">
