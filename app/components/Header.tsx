@@ -6,10 +6,13 @@ import { HiOutlineSearch, HiBell, HiChat } from "react-icons/hi";
 import { useSession, signIn, signOut } from "next-auth/react";
 import { doc, getFirestore, setDoc } from "firebase/firestore";
 import app from "./../Shared/firebaseConfig";
+import { useRouter } from "next/navigation";
 
 const Header = () => {
   const { data: session } = useSession();
-  console.log(session);
+
+  const router = useRouter();
+
   const userImage = session?.user?.image ?? "/man.png";
 
   const db = getFirestore(app);
@@ -76,6 +79,7 @@ const Header = () => {
       {session?.user ? (
         <>
           <Image
+            onClick={() => router.push("/" + session.user?.email)}
             src={userImage}
             alt="user-image"
             width={50}
