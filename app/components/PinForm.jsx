@@ -1,5 +1,6 @@
 import React from 'react'
 import ImageUploader from './../components/ImageUploader'
+import UserTag from './../components/UserTag'
 
 const PinForm = () => {
   return (
@@ -18,6 +19,21 @@ const PinForm = () => {
                   placeholder='Add your title'
                   className='text-[35px] outline-none font-bold w-full border-b-[2px] border-gray-400 placeholder-gray-400'/>
                   <h2 className='text-[12px] w-full text-gray-400'>The first 40 characters are</h2>
+                  {/* <UserTag /> */}
+                  <textarea 
+                    type="text"
+                    placeholder='Add a detailed description'
+                    className='outline-none w-full mt-8 pb-4 text-[14px] border-b-[2px] border-gray-400 placeholder-gray-400'
+                  />
+                  <input
+                    type='text'
+                    placeholder='Add a description link'
+                    className='outline-none w-full pb-4 mt-[90px] border-b-[2px] border-gray-400 placeholder-gray-400'
+                  />
+              </div>
+              <div>
+
+                
               </div>
             </div>
         </div>
