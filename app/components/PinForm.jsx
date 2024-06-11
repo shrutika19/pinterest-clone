@@ -1,8 +1,16 @@
-import React from 'react'
+"use client"
+import React, { useState } from 'react'
 import ImageUploader from './../components/ImageUploader'
 import UserTag from './../components/UserTag'
+import { useSession } from 'next-auth/react'
 
 const PinForm = () => {
+  const {data:session} = useSession();
+  const  [title, setTitle] = useState();
+  const [desc, setDesc] = useState();
+  const [link, setLink] = useState();
+  const [file, setFile] = useState();
+
   return (
     <div className='bg-white p-16 rounded-2xl'>
         <div className='flex justify-end mb-6'>
@@ -19,7 +27,7 @@ const PinForm = () => {
                   placeholder='Add your title'
                   className='text-[35px] outline-none font-bold w-full border-b-[2px] border-gray-400 placeholder-gray-400'/>
                   <h2 className='text-[12px] w-full text-gray-400'>The first 40 characters are</h2>
-                  {/* <UserTag /> */}
+                  <UserTag user={session?.user}/>
                   <textarea 
                     type="text"
                     placeholder='Add a detailed description'
@@ -33,7 +41,7 @@ const PinForm = () => {
               </div>
               <div>
 
-                
+
               </div>
             </div>
         </div>

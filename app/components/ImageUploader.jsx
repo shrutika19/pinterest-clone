@@ -1,4 +1,5 @@
-import React from 'react'
+import { useSession } from 'next-auth/react';
+import React, { useState } from 'react'
 import { HiArrowCircleUp } from "react-icons/hi";
 
 const ImageUploader = () => {
