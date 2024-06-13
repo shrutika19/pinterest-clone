@@ -11,10 +11,16 @@ const PinForm = () => {
   const [link, setLink] = useState();
   const [file, setFile] = useState();
 
+  const onSave = () => {
+    console.log("titlt:", title, desc, link);
+  }
+
   return (
     <div className='bg-white p-16 rounded-2xl'>
         <div className='flex justify-end mb-6'>
-          <button className='bg-red-500 p-2 text-white font-semibold px-3 rounded-lg'>
+          <button 
+          onClick={() => onSave()}
+          className='bg-red-500 p-2 text-white font-semibold px-3 rounded-lg'>
             Save
           </button>
         </div>
@@ -25,17 +31,20 @@ const PinForm = () => {
                   <input 
                   type='text' 
                   placeholder='Add your title'
+                  onChange={(e) => setTitle(e.target.value)}
                   className='text-[35px] outline-none font-bold w-full border-b-[2px] border-gray-400 placeholder-gray-400'/>
                   <h2 className='text-[12px] w-full text-gray-400'>The first 40 characters are</h2>
                   <UserTag user={session?.user}/>
                   <textarea 
                     type="text"
                     placeholder='Add a detailed description'
+                    onChange={(e) => setDesc(e.target.value)}
                     className='outline-none w-full mt-8 pb-4 text-[14px] border-b-[2px] border-gray-400 placeholder-gray-400'
                   />
                   <input
                     type='text'
                     placeholder='Add a description link'
+                    onChange={(e) => setLink(e.target.value)}
                     className='outline-none w-full pb-4 mt-[90px] border-b-[2px] border-gray-400 placeholder-gray-400'
                   />
               </div>
