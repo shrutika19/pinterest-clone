@@ -3,6 +3,8 @@ import React, { useState } from 'react'
 import ImageUploader from './../components/ImageUploader'
 import UserTag from './../components/UserTag'
 import { useSession } from 'next-auth/react'
+import { getDownloadURL, getStorage, ref, uploadBytes } from 'firebase/storage'
+import app from '../Shared/firebaseConfig'
 
 const PinForm = () => {
   const {data:session} = useSession();
@@ -11,8 +13,24 @@ const PinForm = () => {
   const [link, setLink] = useState();
   const [file, setFile] = useState();
 
+  const storage = getStorage(app);
+
   const onSave = () => {
     console.log("titlt:", title, desc, link, file);
+    uploadFile();
+  }
+
+  const uploadFile = () => {
+    const storageRef = ref(storage, 'pintrest/'+file.name);
+
+    uploadBytes(storageRef ,file).then((snapshot) => {
+      console.log("File Uploaded");
+    }).then(resp => {
+      getDownloadURL(storageRef).then(url => {
+        console.log("url", url)
+      })
+    })
+
   }
 
   return (
