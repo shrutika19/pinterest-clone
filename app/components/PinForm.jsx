@@ -5,6 +5,7 @@ import UserTag from './../components/UserTag'
 import { useSession } from 'next-auth/react'
 import { getDownloadURL, getStorage, ref, uploadBytes } from 'firebase/storage'
 import app from '../Shared/firebaseConfig'
+import { doc, getFirestore, setDoc } from 'firebase/firestore'
 
 const PinForm = () => {
   const {data:session} = useSession();
@@ -14,6 +15,8 @@ const PinForm = () => {
   const [file, setFile] = useState();
 
   const storage = getStorage(app);
+  const db = getFirestore(app);
+  const postDataId = Date.now().toString();
 
   const onSave = () => {
     console.log("titlt:", title, desc, link, file);
@@ -26,8 +29,21 @@ const PinForm = () => {
     uploadBytes(storageRef ,file).then((snapshot) => {
       console.log("File Uploaded");
     }).then(resp => {
-      getDownloadURL(storageRef).then(url => {
+      getDownloadURL(storageRef).then(async(url) => {
         console.log("url", url)
+        const postData ={
+          title: title,
+          desc: desc,
+          link: link,
+          image: url,
+          userName: session.user.name,
+          email: session.user.email,
+          userImage: session.user.image
+        }
+
+        await setDoc(doc(db, 'pintrest-posts', postDataId), postData).then(resp => {
+          console.log("data saved")
+        })
       })
     })
 
