@@ -1,8 +1,19 @@
+import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import React from "react";
 
 const UserProfile = ({userInfo}) => {
     console.log(userInfo)
+
+    const router = useRouter();
+    const {data:session} = useSession();
+    
+
+    const onLogoutClick = () =>{
+      signOut();
+      router.push('/');
+    }
 
     return(
       <div className="flex flex-col items-center">
@@ -21,11 +32,21 @@ const UserProfile = ({userInfo}) => {
           {userInfo.email}
         </h2>
 
+        <div className="flex gap-4">
         <button
           className="bg-gray-200 mt-5 p-2 px-3 rounded-full font-semibold"
         >
           Share
-        </button>
+        </button > 
+
+       {session?.user.email == userInfo.email?  <button 
+          className="bg-gray-200  p-2 px-3 font-semibold mt-5 rounded-full"
+          onClick={() => onLogoutClick()}
+        >
+          Sign Out
+        </button>: null}
+        </div>
+
       </div>
     )
 };
