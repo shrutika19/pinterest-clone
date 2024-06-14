@@ -12,7 +12,7 @@ const PinForm = () => {
   const [file, setFile] = useState();
 
   const onSave = () => {
-    console.log("titlt:", title, desc, link);
+    console.log("titlt:", title, desc, link, file);
   }
 
   return (
@@ -25,7 +25,7 @@ const PinForm = () => {
           </button>
         </div>
         <div className='grid grid-cols-1 lg:grid-cols-3 gap-10'>
-           <ImageUploader />
+           <ImageUploader setFile={(file) => setFile(file)}/>
             <div className='col-span-2'> 
               <div className='w-[100%]'>
                   <input 
