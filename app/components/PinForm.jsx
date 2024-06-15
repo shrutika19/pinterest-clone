@@ -6,6 +6,8 @@ import { useSession } from 'next-auth/react'
 import { getDownloadURL, getStorage, ref, uploadBytes } from 'firebase/storage'
 import app from '../Shared/firebaseConfig'
 import { doc, getFirestore, setDoc } from 'firebase/firestore'
+import Image from 'next/image'
+import { useRouter } from 'next/navigation'
 
 const PinForm = () => {
   const {data:session} = useSession();
@@ -13,6 +15,9 @@ const PinForm = () => {
   const [desc, setDesc] = useState();
   const [link, setLink] = useState();
   const [file, setFile] = useState();
+  const [loading, setLoading] = useState(false);
+
+  const router =useRouter();
 
   const storage = getStorage(app);
   const db = getFirestore(app);
@@ -20,6 +25,7 @@ const PinForm = () => {
 
   const onSave = () => {
     console.log("titlt:", title, desc, link, file);
+    setLoading(true);
     uploadFile();
   }
 
@@ -43,6 +49,8 @@ const PinForm = () => {
 
         await setDoc(doc(db, 'pintrest-posts', postDataId), postData).then(resp => {
           console.log("data saved")
+          setLoading(true);
+          router.push("/",+session.user.email)
         })
       })
     })
@@ -55,7 +63,15 @@ const PinForm = () => {
           <button 
           onClick={() => onSave()}
           className='bg-red-500 p-2 text-white font-semibold px-3 rounded-lg'>
-            Save
+            {loading?  <Image
+              src="/loading-indicator.png"
+              width={30}
+              height={30}
+              alt='loading'
+              className='animate-spin'
+            /> :
+            <span>Save</span>}
+           
           </button>
         </div>
         <div className='grid grid-cols-1 lg:grid-cols-3 gap-10'>
