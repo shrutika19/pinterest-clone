@@ -44,7 +44,8 @@ const PinForm = () => {
           image: url,
           userName: session.user.name,
           email: session.user.email,
-          userImage: session.user.image
+          userImage: session.user.image,
+          id: postDataId
         }
 
         await setDoc(doc(db, 'pintrest-posts', postDataId), postData).then(resp => {
