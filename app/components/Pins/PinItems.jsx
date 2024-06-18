@@ -67,7 +67,7 @@ const PinItems = ({ pin }) => {
           className='rounded-3xl cursor-pointer relative z-0'
         />
       </div>
-      <h2 className='font-bold text-[18px] mb-1 mt-2 line-clamp-2'>{pin.title}</h2>
+      <h2 className='font-bold text-[18px] mb-1 mt-2 line-clamp-2 capitalize  text-gray-600'>{pin.title}</h2>
       <div style={userTagStyle}>
         <img
           src={user.image}
