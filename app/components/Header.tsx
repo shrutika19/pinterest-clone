@@ -68,7 +68,10 @@ const Header = () => {
         onClick={() => router.push("/")}
       />
 
-      <button className="bg-black text-white p-2 rounded-full px-4">
+      <button
+        className="bg-black text-white p-2 rounded-full px-4"
+        onClick={() => router.push("/")}
+      >
         Home
       </button>
       <button
